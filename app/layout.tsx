@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Daily Word Chain - Free Online Word Puzzle Game with Timer",
   description: "Play Daily Word Chain, a free 60-second word association puzzle game. Chain words together, beat the timer, and share your score. New challenge every day!",
   keywords: ["word game", "word puzzle", "word chain", "daily puzzle", "word association", "brain game", "vocabulary game"],
+  verification: {
+    google: "KLUWmaJTvSkVldncIo2cPl6KQtr610FUWuZhywdYN5Y",
+  },
   openGraph: {
     title: "Daily Word Chain - Free Online Word Puzzle Game",
     description: "Chain words together in 60 seconds. New challenge every day!",
