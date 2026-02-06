@@ -8,7 +8,7 @@ import { MetadataRoute } from 'next';
  * and provide the sitemap location.
  */
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://word-chain-game.vercel.app';
+  const baseUrl = 'https://word-chain-game-zw8l.vercel.app';
 
   return {
     rules: [

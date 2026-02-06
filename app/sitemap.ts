@@ -8,7 +8,7 @@ import { MetadataRoute } from 'next';
  * settings for daily content updates.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://word-chain-game.vercel.app';
+  const baseUrl = 'https://word-chain-game-zw8l.vercel.app';
 
   // Current date for lastModified
   const currentDate = new Date();
