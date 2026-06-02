@@ -2,6 +2,7 @@
 
 import { getPuzzleNumber } from '@/lib/words';
 import { buildShareText, encodeChallenge } from '@/lib/share';
+import type { Challenge } from '@/lib/share';
 
 interface ShareButtonProps {
   words: string[]; // chained words (excluding the start word)
@@ -9,6 +10,7 @@ interface ShareButtonProps {
   score: number;
   streak: number;
   nickname?: string;
+  challenge?: Challenge;
 }
 
 const SITE_URL =
@@ -20,9 +22,10 @@ export default function ShareButton({
   score,
   streak,
   nickname,
+  challenge,
 }: ShareButtonProps) {
   const handleShare = async () => {
-    const puzzleNo = getPuzzleNumber();
+    const puzzleNo = challenge ? challenge.p : getPuzzleNumber();
     const code = encodeChallenge({ p: puzzleNo, s: score, n: nickname });
     const url = `${SITE_URL}/c/${code}`;
 

@@ -64,7 +64,8 @@ export function saveGameData(data: GameData): void {
  */
 export function updateGameStats(
   score: number,
-  wordCount: number
+  wordCount: number,
+  puzzleNo: number = getPuzzleNumber()
 ): { streak: number; isNewBest: boolean } {
   const today = new Date().toDateString();
   const data = getGameData();
@@ -88,7 +89,7 @@ export function updateGameStats(
     maxStreak: Math.max(data.maxStreak, newStreak),
     history: [
       ...data.history,
-      { date: today, puzzleNo: getPuzzleNumber(), score, wordCount },
+      { date: today, puzzleNo, score, wordCount },
     ],
   });
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, FormEvent, useRef } from 'react';
-import { getTodayWord, getWordByPuzzleNumber } from '@/lib/words';
+import { getTodayWord, getWordByPuzzleNumber, getPuzzleNumber } from '@/lib/words';
 import type { Challenge } from '@/lib/share';
 import { validateWord, canChain, calculateScore } from '@/lib/dictionary';
 import { updateGameStats, getGameData } from '@/lib/storage';
@@ -56,7 +56,11 @@ export default function WordChainGame({ challenge }: { challenge?: Challenge }) 
     const finalScore = calculateScore([startWord, ...wordChain]);
     setScore(finalScore);
 
-    const stats = updateGameStats(finalScore, wordChain.length);
+    const stats = updateGameStats(
+      finalScore,
+      wordChain.length,
+      challenge ? challenge.p : getPuzzleNumber()
+    );
     setStreak(stats.streak);
     setIsNewBest(stats.isNewBest);
 

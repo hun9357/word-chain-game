@@ -115,6 +115,7 @@ export default function Results({
           score={score}
           streak={streak}
           nickname={nickname || undefined}
+          challenge={challenge}
         />
         <button
           onClick={onPlayAgain}
