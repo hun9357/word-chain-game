@@ -79,7 +79,7 @@ export default function Results({
 
       {/* Actions */}
       <div className="space-y-3">
-        <ShareButton wordCount={totalWords} startWord={startWord} score={score} />
+        <ShareButton words={words} startWord={startWord} score={score} streak={streak} />
         <button
           onClick={onPlayAgain}
           className="w-full bg-gray-200 text-gray-900 font-semibold py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors"
