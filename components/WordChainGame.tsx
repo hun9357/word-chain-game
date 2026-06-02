@@ -187,7 +187,7 @@ export default function WordChainGame({ challenge }: { challenge?: Challenge }) 
                 <path d="M12 7v5l3 2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               <span className="min-w-0 max-w-full">
-                Create the longest word chain in 60 seconds
+                Create the longest word chain in {mode.time} seconds
               </span>
             </p>
 

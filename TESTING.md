@@ -154,3 +154,14 @@ Check at 375px (mobile) and desktop widths:
 - [ ] Challenge page `/c/<code>`: editorial masthead inherits the look
 - [ ] OG image `/c/<code>/opengraph-image`: cream card, ink text, rule
 - [ ] No indigo/purple/gray remnants anywhere
+
+## Definitions & Modes
+- [ ] Tapping a chain tile (in play) opens a definition popover (loading → text / "No definition found.")
+- [ ] Tapping a word on the Results screen opens the same popover
+- [ ] Pre-game Time (30/60/120) and Difficulty (Easy/Normal/Hard) selectors work and highlight selection
+- [ ] Pre-game hint text reflects the selected time (e.g. "in 30 seconds")
+- [ ] Min-length rule rejects too-short words with "Use N+ letter words" (try Hard + a 3-letter word)
+- [ ] Timer uses the selected duration (30 / 60 / 120)
+- [ ] Share text header shows the mode (e.g. `Word Chain #N · 30s · 3+`)
+- [ ] Challenge link locks the mode (no selectors on /c/<code>)
+- [ ] Same-mode challenge shows beat/tie/loss; different mode shows the "not comparable" note
