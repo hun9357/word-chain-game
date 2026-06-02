@@ -1,16 +1,18 @@
 'use client';
 
 import { useState, useEffect, FormEvent, useRef } from 'react';
-import { getTodayWord } from '@/lib/words';
+import { getTodayWord, getWordByPuzzleNumber, getPuzzleNumber } from '@/lib/words';
+import type { Challenge } from '@/lib/share';
 import { validateWord, canChain, calculateScore } from '@/lib/dictionary';
 import { updateGameStats, getGameData } from '@/lib/storage';
 import Timer from './Timer';
 import WordChain from './WordChain';
 import Results from './Results';
+import StatsModal from './StatsModal';
 
 type GameState = 'pre-game' | 'playing' | 'finished';
 
-export default function WordChainGame() {
+export default function WordChainGame({ challenge }: { challenge?: Challenge }) {
   const [gameState, setGameState] = useState<GameState>('pre-game');
   const [startWord, setStartWord] = useState('');
   const [wordChain, setWordChain] = useState<string[]>([]);
@@ -20,15 +22,18 @@ export default function WordChainGame() {
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [isNewBest, setIsNewBest] = useState(false);
+  const [showStats, setShowStats] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Initialize game on mount
   useEffect(() => {
-    setStartWord(getTodayWord());
+    setStartWord(
+      challenge ? getWordByPuzzleNumber(challenge.p) : getTodayWord()
+    );
     const data = getGameData();
     setStreak(data.streak);
-  }, []);
+  }, [challenge]);
 
   const startGame = () => {
     setGameState('playing');
@@ -51,7 +56,11 @@ export default function WordChainGame() {
     const finalScore = calculateScore([startWord, ...wordChain]);
     setScore(finalScore);
 
-    const stats = updateGameStats(finalScore);
+    const stats = updateGameStats(
+      finalScore,
+      wordChain.length,
+      challenge ? challenge.p : getPuzzleNumber()
+    );
     setStreak(stats.streak);
     setIsNewBest(stats.isNewBest);
 
@@ -121,7 +130,7 @@ export default function WordChainGame() {
           <div className="text-center space-y-6">
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                Today's Starting Word
+                {challenge ? `Challenge · Word Chain #${challenge.p}` : "Today's Starting Word"}
               </h2>
               <div className="inline-block bg-primary text-white text-4xl font-bold px-8 py-4 rounded-xl">
                 {startWord}
@@ -143,6 +152,12 @@ export default function WordChainGame() {
               className="w-full bg-primary text-white font-bold text-xl py-4 px-8 rounded-xl hover:bg-indigo-700 transition-colors"
             >
               Start Game
+            </button>
+            <button
+              onClick={() => setShowStats(true)}
+              className="text-primary font-semibold"
+            >
+              📊 View Stats
             </button>
           </div>
         )}
@@ -215,8 +230,10 @@ export default function WordChainGame() {
             streak={streak}
             isNewBest={isNewBest}
             onPlayAgain={resetGame}
+            challenge={challenge}
           />
         )}
+        {showStats && <StatsModal onClose={() => setShowStats(false)} />}
       </div>
     </div>
   );

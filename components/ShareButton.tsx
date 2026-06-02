@@ -1,42 +1,49 @@
 'use client';
 
-import { getTodayDateString } from '@/lib/words';
+import { getPuzzleNumber } from '@/lib/words';
+import { buildShareText, encodeChallenge } from '@/lib/share';
+import type { Challenge } from '@/lib/share';
 
 interface ShareButtonProps {
-  wordCount: number;
+  words: string[]; // chained words (excluding the start word)
   startWord: string;
   score: number;
+  streak: number;
+  nickname?: string;
+  challenge?: Challenge;
 }
 
-export default function ShareButton({ wordCount, startWord, score }: ShareButtonProps) {
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://dailywordchain.com';
+
+export default function ShareButton({
+  words,
+  startWord,
+  score,
+  streak,
+  nickname,
+  challenge,
+}: ShareButtonProps) {
   const handleShare = async () => {
-    const dateStr = getTodayDateString();
-    const emoji = score > 150 ? '⭐ Great job!' : score > 100 ? '💪 Nice work!' : '👍 Good try!';
+    const puzzleNo = challenge ? challenge.p : getPuzzleNumber();
+    const code = encodeChallenge({ p: puzzleNo, s: score, n: nickname });
+    const url = `${SITE_URL}/c/${code}`;
 
-    const text = `Daily Word Chain ${dateStr}
-
-🔗 ${wordCount} words chained
-⏱️ 60 seconds
-🎯 Start: ${startWord}
-
-${emoji}
-
-Play: dailywordchain.com
-
-#DailyWordChain #WordPuzzle`;
+    const text = buildShareText({
+      puzzleNo,
+      words: [startWord, ...words],
+      score,
+      streak,
+      url,
+    });
 
     if (navigator.share) {
       try {
-        await navigator.share({
-          title: 'Daily Word Chain',
-          text: text,
-        });
-      } catch (err) {
-        // User cancelled share
-        console.log('Share cancelled');
+        await navigator.share({ title: 'Daily Word Chain', text });
+      } catch {
+        /* user cancelled */
       }
     } else {
-      // Fallback: copy to clipboard
       try {
         await navigator.clipboard.writeText(text);
         alert('Results copied to clipboard!');
