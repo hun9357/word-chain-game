@@ -32,3 +32,33 @@ export function decodeChallenge(code: string): Challenge | null {
     return null;
   }
 }
+
+/**
+ * Spoiler-free emoji rendering: one tile per letter, colored by word length.
+ * 2-3 letters = 🟨, 4-6 = 🟩, 7+ = 🟦. Words separated by spaces.
+ */
+export function chainToEmoji(words: string[]): string {
+  const tileFor = (len: number) => (len >= 7 ? '🟦' : len >= 4 ? '🟩' : '🟨');
+  return words
+    .map((w) => tileFor(w.length).repeat(w.length))
+    .join(' ');
+}
+
+export function buildShareText(opts: {
+  puzzleNo: number;
+  words: string[];
+  score: number;
+  streak: number;
+  url: string;
+}): string {
+  const { puzzleNo, words, score, streak, url } = opts;
+  const streakLine = streak > 1 ? ` · 🔥 ${streak}` : '';
+  return `Word Chain #${puzzleNo}
+🔗 ${words.length} words · ${score} pts${streakLine}
+
+${chainToEmoji(words)}
+
+play → ${url}
+
+#DailyWordChain`;
+}
