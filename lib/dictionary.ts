@@ -41,3 +41,42 @@ export function calculateScore(words: string[]): number {
 
   return wordCount * 10 + charBonus;
 }
+
+/**
+ * Fetch a human-readable definition for a word, cached in-memory.
+ * Returns "{partOfSpeech} — {definition}" or null when unavailable.
+ */
+const definitionCache = new Map<string, string | null>();
+
+export async function getDefinition(word: string): Promise<string | null> {
+  const key = word.toLowerCase();
+  if (definitionCache.has(key)) return definitionCache.get(key) ?? null;
+
+  try {
+    const response = await fetch(
+      `https://api.dictionaryapi.dev/api/v2/entries/en/${key}`,
+      { cache: 'force-cache' }
+    );
+    if (!response.ok) {
+      definitionCache.set(key, null);
+      return null;
+    }
+    const data = await response.json();
+    const entry = Array.isArray(data) ? data[0] : null;
+    const meaning = entry?.meanings?.[0];
+    const definition = meaning?.definitions?.[0]?.definition;
+    if (!definition) {
+      definitionCache.set(key, null);
+      return null;
+    }
+    const result = meaning?.partOfSpeech
+      ? `${meaning.partOfSpeech} — ${definition}`
+      : definition;
+    definitionCache.set(key, result);
+    return result;
+  } catch (error) {
+    console.error('Definition fetch error:', error);
+    definitionCache.set(key, null);
+    return null;
+  }
+}
