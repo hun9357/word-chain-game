@@ -1,5 +1,8 @@
 'use client';
 
+import { useState } from 'react';
+import DefinitionPopover from './DefinitionPopover';
+
 interface WordChainProps {
   words: string[];
   startWord: string;
@@ -7,6 +10,7 @@ interface WordChainProps {
 
 export default function WordChain({ words, startWord }: WordChainProps) {
   const allWords = [startWord, ...words];
+  const [selected, setSelected] = useState<string | null>(null);
 
   return (
     <div className="w-full">
@@ -15,7 +19,9 @@ export default function WordChain({ words, startWord }: WordChainProps) {
         <div className="flex gap-2 min-w-max">
           {allWords.map((word, index) => (
             <div key={index} className="flex items-center gap-2">
-              <div
+              <button
+                type="button"
+                onClick={() => setSelected(word)}
                 className={`px-4 py-2 rounded-md font-semibold text-lg border ${
                   index === 0
                     ? 'bg-ink text-paper border-ink'
@@ -23,7 +29,7 @@ export default function WordChain({ words, startWord }: WordChainProps) {
                 }`}
               >
                 {word}
-              </div>
+              </button>
               {index < allWords.length - 1 && (
                 <svg
                   className="w-5 h-5 text-ink-faint flex-shrink-0"
@@ -43,6 +49,7 @@ export default function WordChain({ words, startWord }: WordChainProps) {
           ))}
         </div>
       </div>
+      {selected && <DefinitionPopover word={selected} onClose={() => setSelected(null)} />}
     </div>
   );
 }
