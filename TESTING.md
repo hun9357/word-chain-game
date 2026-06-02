@@ -104,8 +104,40 @@ Invalid test words:
 - [ ] Meta description set (view source)
 - [ ] Open Graph tags present (test with og debugger)
 
+## Growth Loop Features
+
+### Emoji Share
+- [ ] "Share Results" copies/shares text with `Word Chain #N` header
+- [ ] Output shows emoji tiles (🟨/🟩/🟦 by word length), score, and a `/c/<code>` link
+- [ ] Output does NOT contain any actual words (spoiler-free)
+- [ ] Streak flame (🔥) appears only when streak > 1
+
+### Stats Modal
+- [ ] "📊 View Stats" opens on both pre-game and Results screens
+- [ ] Tiles show Played / Streak / Max / Best
+- [ ] Score distribution bars render proportionally
+- [ ] 30-day calendar heatmap colors played days; hover shows date + score
+- [ ] Backdrop click and × button close the modal
+
+### Friend Challenge
+- [ ] Opening `/c/<code>` shows challenger header ("X scored N on #P")
+- [ ] Challenge loads the SAME puzzle word as the challenger (even a past one)
+- [ ] After finishing, banner shows "You beat … / Lost to …" with correct margin
+- [ ] Sharing again generates a new link with your own score (challenge back)
+- [ ] Malformed `/c/<garbage>` falls back to today's puzzle without crashing
+- [ ] Optional nickname input (max 16 chars) appears on the challenger's name
+
+### Dynamic OG Card
+- [ ] `/c/<code>/opengraph-image` renders a 1200×630 PNG
+- [ ] Shared link unfurls as a rich card (test with an OG/link debugger)
+- [ ] `<title>`/`og` tags reflect the challenge (view source on `/c/<code>`)
+
+## Unit Tests
+- [ ] `npm test` passes (puzzle numbers, storage/history, challenge codec, emoji, stats)
+
 ## Deployment Readiness
 - [ ] No console errors in production build
 - [ ] All assets load correctly
 - [ ] No TypeScript errors
 - [ ] Build completes successfully (npm run build)
+- [ ] `NEXT_PUBLIC_SITE_URL` set in Vercel env vars (for correct share links)
