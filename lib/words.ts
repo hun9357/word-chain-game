@@ -40,17 +40,35 @@ export const DAILY_WORDS = [
 ];
 
 /**
- * Get today's starting word based on UTC date
- * Ensures all users worldwide get the same word on the same UTC day
+ * Fixed launch epoch (UTC midnight). Puzzle #1 is this day.
+ */
+export const LAUNCH_EPOCH_UTC = Date.UTC(2024, 0, 1);
+
+/**
+ * Stable puzzle number for a given date, based on whole UTC days since launch.
+ * All users worldwide share the same puzzle number on the same UTC day.
+ */
+export function getPuzzleNumber(date: Date = new Date()): number {
+  const dayMs = 86400000;
+  const dayUTC = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+  return Math.floor((dayUTC - LAUNCH_EPOCH_UTC) / dayMs) + 1;
+}
+
+/**
+ * Start word for an arbitrary puzzle number (wraps around the word list).
+ * Supports past/future puzzles for friend challenges.
+ */
+export function getWordByPuzzleNumber(n: number): string {
+  const len = DAILY_WORDS.length;
+  const idx = (((n - 1) % len) + len) % len;
+  return DAILY_WORDS[idx];
+}
+
+/**
+ * Today's starting word (UTC-based, deterministic worldwide).
  */
 export function getTodayWord(): string {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const diff = now.getTime() - start.getTime();
-  const oneDay = 1000 * 60 * 60 * 24;
-  const dayOfYear = Math.floor(diff / oneDay);
-
-  return DAILY_WORDS[dayOfYear % DAILY_WORDS.length];
+  return getWordByPuzzleNumber(getPuzzleNumber());
 }
 
 /**
