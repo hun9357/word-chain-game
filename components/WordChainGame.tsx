@@ -130,7 +130,7 @@ export default function WordChainGame({ challenge }: { challenge?: Challenge }) 
           <div className="text-center space-y-6">
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                Today's Starting Word
+                {challenge ? `Challenge · Word Chain #${challenge.p}` : "Today's Starting Word"}
               </h2>
               <div className="inline-block bg-primary text-white text-4xl font-bold px-8 py-4 rounded-xl">
                 {startWord}

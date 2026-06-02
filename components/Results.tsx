@@ -45,13 +45,17 @@ export default function Results({
       {challenge && (
         <div
           className={`rounded-lg p-4 text-center font-semibold ${
-            score >= challenge.s
+            score > challenge.s
               ? 'bg-green-50 border border-green-200 text-green-800'
+              : score === challenge.s
+              ? 'bg-blue-50 border border-blue-200 text-blue-800'
               : 'bg-amber-50 border border-amber-200 text-amber-800'
           }`}
         >
-          {score >= challenge.s
+          {score > challenge.s
             ? `🎉 You beat ${challenge.n ?? 'them'} by ${score - challenge.s}!`
+            : score === challenge.s
+            ? `🤝 Tied with ${challenge.n ?? 'them'} at ${score}!`
             : `Lost to ${challenge.n ?? 'them'} by ${challenge.s - score}. Try again!`}
         </div>
       )}
