@@ -56,7 +56,7 @@ export default function ShareButton({
   return (
     <button
       onClick={handleShare}
-      className="w-full bg-primary text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors"
+      className="w-full bg-ink text-paper font-semibold py-3 px-6 rounded-md hover:opacity-90 transition-opacity"
     >
       Share Results
     </button>

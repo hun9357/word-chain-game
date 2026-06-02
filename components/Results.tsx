@@ -33,8 +33,8 @@ export default function Results({
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">Game Over!</h2>
-        <p className="text-lg text-gray-600">
+        <h2 className="font-serif text-3xl font-semibold text-ink mb-2">Game Over</h2>
+        <p className="text-lg text-ink-muted">
           {isNewBest && '🎉 New Personal Best! '}
           {score > 150 && 'Amazing chain!'}
           {score > 100 && score <= 150 && 'Great job!'}
@@ -61,19 +61,19 @@ export default function Results({
       )}
 
       {/* Score breakdown */}
-      <div className="bg-gradient-to-br from-primary to-indigo-700 rounded-xl p-6 text-white">
+      <div className="bg-paper border border-hairline rounded-lg p-6">
         <div className="text-center mb-4">
-          <p className="text-sm opacity-80">Your Score</p>
-          <p className="text-5xl font-bold">{score}</p>
+          <p className="text-xs tracking-[0.15em] uppercase text-ink-faint font-semibold">Your Score</p>
+          <p className="font-serif text-6xl font-semibold text-ink">{score}</p>
         </div>
-        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-indigo-400">
+        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-hairline">
           <div className="text-center">
-            <p className="text-2xl font-bold">{totalWords}</p>
-            <p className="text-sm opacity-80">Words Chained</p>
+            <p className="font-serif text-2xl font-semibold text-ink">{totalWords}</p>
+            <p className="text-sm text-ink-muted">Words Chained</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold">{totalChars}</p>
-            <p className="text-sm opacity-80">Total Letters</p>
+            <p className="font-serif text-2xl font-semibold text-ink">{totalChars}</p>
+            <p className="text-sm text-ink-muted">Total Letters</p>
           </div>
         </div>
       </div>
@@ -89,10 +89,10 @@ export default function Results({
 
       {/* Word chain display */}
       <div>
-        <h3 className="text-sm font-medium text-gray-600 mb-2">Your Chain</h3>
-        <div className="bg-gray-50 rounded-lg p-4 max-h-40 overflow-y-auto">
-          <p className="text-gray-900 leading-relaxed">
-            <span className="font-bold text-primary">{startWord}</span>
+        <h3 className="text-xs tracking-[0.15em] uppercase text-ink-faint font-semibold mb-2">Your Chain</h3>
+        <div className="border border-hairline rounded-lg p-4 max-h-40 overflow-y-auto">
+          <p className="text-ink leading-relaxed">
+            <span className="font-bold">{startWord}</span>
             {words.map((word, idx) => (
               <span key={idx}>
                 {' → '}
@@ -111,7 +111,7 @@ export default function Results({
           onChange={(e) => setNickname(e.target.value.slice(0, 16))}
           placeholder="Your name (optional)"
           maxLength={16}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg text-center"
+          className="w-full px-4 py-2 border border-hairline rounded-md text-center focus:border-ink focus:outline-none"
         />
         <ShareButton
           words={words}
@@ -123,23 +123,23 @@ export default function Results({
         />
         <button
           onClick={onPlayAgain}
-          className="w-full bg-gray-200 text-gray-900 font-semibold py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors"
+          className="w-full border border-hairline text-ink font-semibold py-3 px-6 rounded-md hover:bg-ink/5 transition-colors"
         >
           Play Again
         </button>
         <button
           onClick={() => setShowStats(true)}
-          className="w-full text-primary font-semibold py-2"
+          className="w-full text-ink-muted font-semibold py-2 underline-offset-4 hover:underline"
         >
-          📊 View Stats
+          View stats
         </button>
         {showStats && <StatsModal onClose={() => setShowStats(false)} />}
       </div>
 
       {/* AdSense Placeholder - Results */}
       {/* TODO: Replace with actual AdSense code */}
-      <div className="flex items-center justify-center h-[250px] bg-gray-100 rounded-lg border-2 border-dashed border-gray-300">
-        <p className="text-gray-400 text-sm">Ad Space 300x250</p>
+      <div className="flex items-center justify-center h-[250px] rounded-lg border-2 border-dashed border-hairline">
+        <p className="text-ink-faint text-sm">Ad Space 300x250</p>
       </div>
     </div>
   );
