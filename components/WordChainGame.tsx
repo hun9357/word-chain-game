@@ -51,7 +51,7 @@ export default function WordChainGame() {
     const finalScore = calculateScore([startWord, ...wordChain]);
     setScore(finalScore);
 
-    const stats = updateGameStats(finalScore);
+    const stats = updateGameStats(finalScore, wordChain.length);
     setStreak(stats.streak);
     setIsNewBest(stats.isNewBest);
 
