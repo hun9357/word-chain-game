@@ -141,3 +141,16 @@ Invalid test words:
 - [ ] No TypeScript errors
 - [ ] Build completes successfully (npm run build)
 - [ ] `NEXT_PUBLIC_SITE_URL` set in Vercel env vars (for correct share links)
+
+## Editorial UI (visual)
+Check at 375px (mobile) and desktop widths:
+- [ ] Page background is cream paper (#faf7ef), body font is Inter
+- [ ] Masthead: `{date} · No. {n}` kicker, Fraunces serif "Word Chain", hairline rule
+- [ ] Pre-game: "Today's word" kicker, outlined word tile, ink "Play" button, "View stats" link
+- [ ] Playing: ink timer track (turns red under 10s), Fraunces score, ink input focus ring, ink "Add Word"
+- [ ] Word chain: start tile solid ink, the rest hairline-bordered
+- [ ] Results: Fraunces "Game Over", paper score panel, status banners still colored (green/blue/amber), ghost "Play Again"
+- [ ] Stats modal: paper panel, Fraunces numbers, ink distribution bars, ink calendar heatmap
+- [ ] Challenge page `/c/<code>`: editorial masthead inherits the look
+- [ ] OG image `/c/<code>/opengraph-image`: cream card, ink text, rule
+- [ ] No indigo/purple/gray remnants anywhere
