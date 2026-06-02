@@ -25,6 +25,7 @@ export default function Results({
   challenge,
 }: ResultsProps) {
   const [showStats, setShowStats] = useState(false);
+  const [nickname, setNickname] = useState('');
 
   const totalWords = words.length;
   const totalChars = words.reduce((sum, word) => sum + word.length, 0);
@@ -100,7 +101,21 @@ export default function Results({
 
       {/* Actions */}
       <div className="space-y-3">
-        <ShareButton words={words} startWord={startWord} score={score} streak={streak} />
+        <input
+          type="text"
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value.slice(0, 16))}
+          placeholder="Your name (optional)"
+          maxLength={16}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg text-center"
+        />
+        <ShareButton
+          words={words}
+          startWord={startWord}
+          score={score}
+          streak={streak}
+          nickname={nickname || undefined}
+        />
         <button
           onClick={onPlayAgain}
           className="w-full bg-gray-200 text-gray-900 font-semibold py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors"
