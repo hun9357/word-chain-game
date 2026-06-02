@@ -35,3 +35,10 @@ next-env.d.ts
 
 # brainstorming visual companion mockups
 .superpowers/
+
+# local tooling / preview artifacts
+.claude/
+.chrome-debug-profile/
+previews/
+.next-dev.*.log
+.next-start.*.log

@@ -28,11 +28,11 @@ export default function DefinitionPopover({ word, onClose }: DefinitionPopoverPr
 
   return (
     <div
-      className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-[60]"
+      className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-[60]"
       onClick={onClose}
     >
       <div
-        className="bg-paper border border-hairline rounded-lg shadow-lg p-6 max-w-sm w-full"
+        className="bg-paper-soft border border-hairline rounded-lg shadow-panel p-6 max-w-sm w-full"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-start mb-2">
@@ -40,13 +40,13 @@ export default function DefinitionPopover({ word, onClose }: DefinitionPopoverPr
           <button
             onClick={onClose}
             aria-label="Close"
-            className="text-ink-faint text-2xl leading-none hover:text-ink"
+            className="min-h-11 min-w-11 text-ink-faint text-2xl leading-none hover:text-ink"
           >
-            ×
+            x
           </button>
         </div>
         <p className="text-ink-muted leading-relaxed">
-          {loading ? '…' : text ?? 'No definition found.'}
+          {loading ? '...' : text ?? 'No definition found.'}
         </p>
       </div>
     </div>

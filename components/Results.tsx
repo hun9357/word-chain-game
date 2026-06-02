@@ -68,14 +68,14 @@ export default function Results({
             }`}
           >
             {score > challenge.s
-              ? `🎉 You beat ${challenge.n ?? 'them'} by ${score - challenge.s}!`
+              ? `You beat ${challenge.n ?? 'them'} by ${score - challenge.s}.`
               : score === challenge.s
-              ? `🤝 Tied with ${challenge.n ?? 'them'} at ${score}!`
-              : `Lost to ${challenge.n ?? 'them'} by ${challenge.s - score}. Try again!`}
+              ? `You tied ${challenge.n ?? 'them'} at ${score}.`
+              : `You were ${challenge.s - score} points behind ${challenge.n ?? 'them'}. Try again.`}
           </div>
         ) : (
           <div className="rounded-lg p-4 text-center font-semibold bg-ink/5 border border-hairline text-ink-muted">
-            Played a different mode ({modeLabel(challengeMode!)}) — scores aren&apos;t directly comparable.
+            Played a different mode ({modeLabel(challengeMode!)}) - scores aren&apos;t directly comparable.
           </div>
         ))}
 
@@ -113,7 +113,7 @@ export default function Results({
             </button>
             {words.map((word, idx) => (
               <span key={idx}>
-                {' → '}
+                {' -> '}
                 <button type="button" onClick={() => setDefWord(word)} className="font-semibold underline-offset-2 hover:underline">
                   {word}
                 </button>

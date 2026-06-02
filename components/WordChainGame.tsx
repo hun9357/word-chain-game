@@ -192,9 +192,9 @@ export default function WordChainGame({ challenge }: { challenge?: Challenge }) 
             </p>
 
             {!challenge && (
-              <div className="space-y-3">
+              <div className="mt-6 space-y-3">
                 <div>
-                  <p className="text-xs tracking-[0.15em] uppercase text-ink-faint font-semibold mb-2">Time</p>
+                  <p className="text-xs tracking-[0.15em] uppercase text-ink-faint font-bold mb-2">Time</p>
                   <div className="flex gap-2">
                     {TIME_OPTIONS.map((t) => (
                       <button
@@ -202,7 +202,9 @@ export default function WordChainGame({ challenge }: { challenge?: Challenge }) 
                         type="button"
                         onClick={() => setSelTime(t)}
                         className={`flex-1 py-2 rounded-md border font-semibold ${
-                          selTime === t ? 'bg-ink text-paper border-ink' : 'border-hairline text-ink'
+                          selTime === t
+                            ? 'bg-olive text-paper-soft border-olive'
+                            : 'border-hairline text-olive-dark hover:bg-olive/10'
                         }`}
                       >
                         {t}s
@@ -211,7 +213,7 @@ export default function WordChainGame({ challenge }: { challenge?: Challenge }) 
                   </div>
                 </div>
                 <div>
-                  <p className="text-xs tracking-[0.15em] uppercase text-ink-faint font-semibold mb-2">Difficulty</p>
+                  <p className="text-xs tracking-[0.15em] uppercase text-ink-faint font-bold mb-2">Difficulty</p>
                   <div className="flex gap-2">
                     {DIFFICULTY_OPTIONS.map((d) => (
                       <button
@@ -219,7 +221,9 @@ export default function WordChainGame({ challenge }: { challenge?: Challenge }) 
                         type="button"
                         onClick={() => setSelMinLen(d.minLen)}
                         className={`flex-1 py-2 rounded-md border font-semibold ${
-                          selMinLen === d.minLen ? 'bg-ink text-paper border-ink' : 'border-hairline text-ink'
+                          selMinLen === d.minLen
+                            ? 'bg-olive text-paper-soft border-olive'
+                            : 'border-hairline text-olive-dark hover:bg-olive/10'
                         }`}
                       >
                         {d.label}
