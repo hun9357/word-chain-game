@@ -1,4 +1,5 @@
 import { getPuzzleNumber } from './words';
+import type { Mode } from './modes';
 
 const STORAGE_KEY = 'dailyWordChain';
 
@@ -7,6 +8,8 @@ export interface HistoryEntry {
   puzzleNo: number;
   score: number;
   wordCount: number;
+  time?: number;
+  minLen?: number;
 }
 
 export interface GameData {
@@ -65,7 +68,8 @@ export function saveGameData(data: GameData): void {
 export function updateGameStats(
   score: number,
   wordCount: number,
-  puzzleNo: number = getPuzzleNumber()
+  puzzleNo: number = getPuzzleNumber(),
+  mode?: Mode
 ): { streak: number; isNewBest: boolean } {
   const today = new Date().toDateString();
   const data = getGameData();
@@ -81,16 +85,19 @@ export function updateGameStats(
   const newStreak = wasYesterday ? data.streak + 1 : 1;
   const isNewBest = score > data.bestScore;
 
+  const entry: HistoryEntry = { date: today, puzzleNo, score, wordCount };
+  if (mode) {
+    entry.time = mode.time;
+    entry.minLen = mode.minLen;
+  }
+
   saveGameData({
     lastPlayedDate: today,
     streak: newStreak,
     bestScore: isNewBest ? score : data.bestScore,
     gamesPlayed: data.gamesPlayed + 1,
     maxStreak: Math.max(data.maxStreak, newStreak),
-    history: [
-      ...data.history,
-      { date: today, puzzleNo, score, wordCount },
-    ],
+    history: [...data.history, entry],
   });
 
   return { streak: newStreak, isNewBest };

@@ -41,3 +41,19 @@ describe('updateGameStats', () => {
     expect(getGameData().history.length).toBe(1);
   });
 });
+
+describe('updateGameStats mode', () => {
+  it('stores time/minLen when a mode is provided', () => {
+    updateGameStats(40, 3, 1, { time: 30, minLen: 4 });
+    const h = getGameData().history[0];
+    expect(h.time).toBe(30);
+    expect(h.minLen).toBe(4);
+  });
+
+  it('omits mode fields when no mode is provided', () => {
+    updateGameStats(40, 3, 1);
+    const h = getGameData().history[0];
+    expect(h.time).toBeUndefined();
+    expect(h.minLen).toBeUndefined();
+  });
+});

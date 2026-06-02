@@ -1,7 +1,11 @@
+import { modeLabel, type Mode } from './modes';
+
 export interface Challenge {
   p: number; // puzzle number
   s: number; // challenger score
   n?: string; // challenger nickname (optional, max 16 chars)
+  t?: number; // mode time in seconds (omitted when default 60)
+  m?: number; // mode min word length (omitted when default 2)
 }
 
 function b64urlEncode(input: string): string {
@@ -17,6 +21,8 @@ function b64urlDecode(input: string): string {
 export function encodeChallenge(c: Challenge): string {
   const clean: Challenge = { p: c.p, s: c.s };
   if (c.n) clean.n = c.n.slice(0, 16);
+  if (typeof c.t === 'number' && c.t !== 60) clean.t = c.t;
+  if (typeof c.m === 'number' && c.m !== 2) clean.m = c.m;
   return b64urlEncode(JSON.stringify(clean));
 }
 
@@ -27,6 +33,8 @@ export function decodeChallenge(code: string): Challenge | null {
     if (typeof obj?.p !== 'number' || typeof obj?.s !== 'number') return null;
     const result: Challenge = { p: obj.p, s: obj.s };
     if (typeof obj.n === 'string') result.n = obj.n.slice(0, 16);
+    if (typeof obj.t === 'number') result.t = obj.t;
+    if (typeof obj.m === 'number') result.m = obj.m;
     return result;
   } catch {
     return null;
@@ -50,10 +58,12 @@ export function buildShareText(opts: {
   score: number;
   streak: number;
   url: string;
+  mode?: Mode;
 }): string {
-  const { puzzleNo, words, score, streak, url } = opts;
+  const { puzzleNo, words, score, streak, url, mode } = opts;
   const streakLine = streak > 1 ? ` · 🔥 ${streak}` : '';
-  return `Word Chain #${puzzleNo}
+  const modeText = mode ? ` · ${modeLabel(mode)}` : '';
+  return `Word Chain #${puzzleNo}${modeText}
 🔗 ${words.length} words · ${score} pts${streakLine}
 
 ${chainToEmoji(words)}
