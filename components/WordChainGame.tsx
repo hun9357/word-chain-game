@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect, FormEvent, useRef } from 'react';
-import { getTodayWord } from '@/lib/words';
+import { getTodayWord, getWordByPuzzleNumber } from '@/lib/words';
+import type { Challenge } from '@/lib/share';
 import { validateWord, canChain, calculateScore } from '@/lib/dictionary';
 import { updateGameStats, getGameData } from '@/lib/storage';
 import Timer from './Timer';
@@ -11,7 +12,7 @@ import StatsModal from './StatsModal';
 
 type GameState = 'pre-game' | 'playing' | 'finished';
 
-export default function WordChainGame() {
+export default function WordChainGame({ challenge }: { challenge?: Challenge }) {
   const [gameState, setGameState] = useState<GameState>('pre-game');
   const [startWord, setStartWord] = useState('');
   const [wordChain, setWordChain] = useState<string[]>([]);
@@ -27,10 +28,12 @@ export default function WordChainGame() {
 
   // Initialize game on mount
   useEffect(() => {
-    setStartWord(getTodayWord());
+    setStartWord(
+      challenge ? getWordByPuzzleNumber(challenge.p) : getTodayWord()
+    );
     const data = getGameData();
     setStreak(data.streak);
-  }, []);
+  }, [challenge]);
 
   const startGame = () => {
     setGameState('playing');
@@ -223,6 +226,7 @@ export default function WordChainGame() {
             streak={streak}
             isNewBest={isNewBest}
             onPlayAgain={resetGame}
+            challenge={challenge}
           />
         )}
         {showStats && <StatsModal onClose={() => setShowStats(false)} />}

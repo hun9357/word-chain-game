@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import ShareButton from './ShareButton';
 import StatsModal from './StatsModal';
+import type { Challenge } from '@/lib/share';
 
 interface ResultsProps {
   words: string[];
@@ -11,6 +12,7 @@ interface ResultsProps {
   streak: number;
   isNewBest: boolean;
   onPlayAgain: () => void;
+  challenge?: Challenge;
 }
 
 export default function Results({
@@ -20,6 +22,7 @@ export default function Results({
   streak,
   isNewBest,
   onPlayAgain,
+  challenge,
 }: ResultsProps) {
   const [showStats, setShowStats] = useState(false);
 
@@ -37,6 +40,20 @@ export default function Results({
           {score <= 100 && 'Nice try!'}
         </p>
       </div>
+
+      {challenge && (
+        <div
+          className={`rounded-lg p-4 text-center font-semibold ${
+            score >= challenge.s
+              ? 'bg-green-50 border border-green-200 text-green-800'
+              : 'bg-amber-50 border border-amber-200 text-amber-800'
+          }`}
+        >
+          {score >= challenge.s
+            ? `🎉 You beat ${challenge.n ?? 'them'} by ${score - challenge.s}!`
+            : `Lost to ${challenge.n ?? 'them'} by ${challenge.s - score}. Try again!`}
+        </div>
+      )}
 
       {/* Score breakdown */}
       <div className="bg-gradient-to-br from-primary to-indigo-700 rounded-xl p-6 text-white">
