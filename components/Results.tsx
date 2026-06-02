@@ -1,6 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import ShareButton from './ShareButton';
+import StatsModal from './StatsModal';
 
 interface ResultsProps {
   words: string[];
@@ -19,6 +21,8 @@ export default function Results({
   isNewBest,
   onPlayAgain,
 }: ResultsProps) {
+  const [showStats, setShowStats] = useState(false);
+
   const totalWords = words.length;
   const totalChars = words.reduce((sum, word) => sum + word.length, 0);
 
@@ -86,6 +90,13 @@ export default function Results({
         >
           Play Again
         </button>
+        <button
+          onClick={() => setShowStats(true)}
+          className="w-full text-primary font-semibold py-2"
+        >
+          📊 View Stats
+        </button>
+        {showStats && <StatsModal onClose={() => setShowStats(false)} />}
       </div>
 
       {/* AdSense Placeholder - Results */}

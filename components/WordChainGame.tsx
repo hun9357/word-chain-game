@@ -7,6 +7,7 @@ import { updateGameStats, getGameData } from '@/lib/storage';
 import Timer from './Timer';
 import WordChain from './WordChain';
 import Results from './Results';
+import StatsModal from './StatsModal';
 
 type GameState = 'pre-game' | 'playing' | 'finished';
 
@@ -20,6 +21,7 @@ export default function WordChainGame() {
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [isNewBest, setIsNewBest] = useState(false);
+  const [showStats, setShowStats] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -144,6 +146,12 @@ export default function WordChainGame() {
             >
               Start Game
             </button>
+            <button
+              onClick={() => setShowStats(true)}
+              className="text-primary font-semibold"
+            >
+              📊 View Stats
+            </button>
           </div>
         )}
 
@@ -217,6 +225,7 @@ export default function WordChainGame() {
             onPlayAgain={resetGame}
           />
         )}
+        {showStats && <StatsModal onClose={() => setShowStats(false)} />}
       </div>
     </div>
   );
