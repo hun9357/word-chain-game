@@ -37,19 +37,19 @@ export default function Timer({ isActive, onTimeUp, duration = 60 }: TimerProps)
   return (
     <div className="w-full">
       <div className="flex justify-between items-center mb-2">
-        <span className="text-sm font-medium text-gray-600">Time</span>
+        <span className="text-xs tracking-[0.15em] uppercase text-ink-faint font-bold">Time</span>
         <span
-          className={`text-2xl font-bold ${
-            isLowTime ? 'text-red-500 animate-pulse' : 'text-gray-900'
+          className={`font-serif text-2xl font-semibold ${
+            isLowTime ? 'text-red-600 animate-pulse' : 'text-clay'
           }`}
         >
           {timeLeft}s
         </span>
       </div>
-      <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+      <div className="w-full h-2 bg-ink/10 rounded-full overflow-hidden">
         <div
           className={`h-full transition-all duration-1000 ${
-            isLowTime ? 'bg-red-500' : 'bg-primary'
+            isLowTime ? 'bg-red-600' : 'bg-olive'
           }`}
           style={{ width: `${percentage}%` }}
         />

@@ -10,7 +10,7 @@ export default function Image({ params }: { params: { code: string } }) {
   const headline = c
     ? `${c.n ?? 'A friend'} scored ${c.s}`
     : 'Daily Word Chain';
-  const sub = c ? `Word Chain #${c.p} · Can you beat it?` : 'Play the daily word puzzle';
+  const sub = c ? `Word Chain #${c.p} / Can you beat it?` : 'Play the daily word puzzle';
 
   return new ImageResponse(
     (
@@ -22,14 +22,42 @@ export default function Image({ params }: { params: { code: string } }) {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'linear-gradient(135deg,#4f46e5,#4338ca)',
-          color: 'white',
-          fontFamily: 'sans-serif',
+          background: '#f7f0e2',
+          color: '#141414',
+          fontFamily: 'serif',
         }}
       >
-        <div style={{ fontSize: 64, fontWeight: 800 }}>🔗 {headline}</div>
-        <div style={{ fontSize: 36, marginTop: 24, opacity: 0.9 }}>{sub}</div>
-        <div style={{ fontSize: 28, marginTop: 48, opacity: 0.7 }}>dailywordchain.com</div>
+        <div
+          style={{
+            width: 980,
+            height: 3,
+            borderTop: '1px solid #141414',
+            borderBottom: '1px solid #141414',
+          }}
+        />
+        <div style={{ fontSize: 68, fontWeight: 700, marginTop: 58 }}>
+          {headline}
+        </div>
+        <div
+          style={{
+            width: 90,
+            height: 4,
+            background: '#58613a',
+            margin: '30px 0',
+            borderRadius: 2,
+          }}
+        />
+        <div style={{ fontSize: 38, color: '#5c5c5c' }}>{sub}</div>
+        <div
+          style={{
+            fontSize: 28,
+            marginTop: 54,
+            color: '#8a8478',
+            fontFamily: 'sans-serif',
+          }}
+        >
+          dailywordchain.com
+        </div>
       </div>
     ),
     { ...size }

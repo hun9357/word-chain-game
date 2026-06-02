@@ -53,3 +53,32 @@ describe('buildShareText', () => {
     expect(text).not.toContain('TABLE');
   });
 });
+
+describe('challenge mode encoding', () => {
+  it('round-trips a non-default mode', () => {
+    const code = encodeChallenge({ p: 5, s: 80, t: 30, m: 4 });
+    expect(decodeChallenge(code)).toEqual({ p: 5, s: 80, t: 30, m: 4 });
+  });
+
+  it('omits default mode fields from the payload', () => {
+    const code = encodeChallenge({ p: 5, s: 80, t: 60, m: 2 });
+    expect(decodeChallenge(code)).toEqual({ p: 5, s: 80 });
+  });
+
+  it('legacy code without mode decodes without t/m', () => {
+    const code = encodeChallenge({ p: 9, s: 10 });
+    const decoded = decodeChallenge(code);
+    expect(decoded).toEqual({ p: 9, s: 10 });
+    expect(decoded?.t).toBeUndefined();
+  });
+});
+
+describe('buildShareText mode label', () => {
+  it('appends the mode label to the header when a mode is given', () => {
+    const text = buildShareText({
+      puzzleNo: 12, words: ['CAT'], score: 20, streak: 1,
+      url: 'https://x/c/abc', mode: { time: 30, minLen: 3 },
+    });
+    expect(text).toContain('Word Chain #12 · 30s · 3+');
+  });
+});

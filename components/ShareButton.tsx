@@ -3,6 +3,7 @@
 import { getPuzzleNumber } from '@/lib/words';
 import { buildShareText, encodeChallenge } from '@/lib/share';
 import type { Challenge } from '@/lib/share';
+import type { Mode } from '@/lib/modes';
 
 interface ShareButtonProps {
   words: string[]; // chained words (excluding the start word)
@@ -11,6 +12,7 @@ interface ShareButtonProps {
   streak: number;
   nickname?: string;
   challenge?: Challenge;
+  mode: Mode;
 }
 
 const SITE_URL =
@@ -23,10 +25,17 @@ export default function ShareButton({
   streak,
   nickname,
   challenge,
+  mode,
 }: ShareButtonProps) {
   const handleShare = async () => {
     const puzzleNo = challenge ? challenge.p : getPuzzleNumber();
-    const code = encodeChallenge({ p: puzzleNo, s: score, n: nickname });
+    const code = encodeChallenge({
+      p: puzzleNo,
+      s: score,
+      n: nickname,
+      t: mode.time,
+      m: mode.minLen,
+    });
     const url = `${SITE_URL}/c/${code}`;
 
     const text = buildShareText({
@@ -35,6 +44,7 @@ export default function ShareButton({
       score,
       streak,
       url,
+      mode,
     });
 
     if (navigator.share) {
@@ -56,7 +66,7 @@ export default function ShareButton({
   return (
     <button
       onClick={handleShare}
-      className="w-full bg-primary text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors"
+      className="w-full rounded-md border border-olive bg-olive px-6 py-3 font-extrabold text-paper-soft transition-colors hover:bg-olive-dark"
     >
       Share Results
     </button>
