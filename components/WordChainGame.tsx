@@ -125,39 +125,39 @@ export default function WordChainGame({ challenge }: { challenge?: Challenge }) 
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
+      <div className="bg-paper border border-hairline rounded-lg shadow-sm p-6 sm:p-8">
         {gameState === 'pre-game' && (
           <div className="text-center space-y-6">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                {challenge ? `Challenge · Word Chain #${challenge.p}` : "Today's Starting Word"}
-              </h2>
-              <div className="inline-block bg-primary text-white text-4xl font-bold px-8 py-4 rounded-xl">
+              <p className="text-xs tracking-[0.18em] uppercase text-ink-faint font-semibold mb-2">
+                {challenge ? `Challenge · No. ${challenge.p}` : "Today's word"}
+              </p>
+              <div className="inline-block border-2 border-ink text-ink text-3xl sm:text-4xl font-bold tracking-[0.3em] pl-[0.3em] pr-2 py-3 rounded-md">
                 {startWord}
               </div>
             </div>
 
-            <div className="text-left bg-gray-50 rounded-lg p-6 space-y-3">
-              <h3 className="font-semibold text-gray-900">How to Play:</h3>
-              <ul className="space-y-2 text-gray-600 text-sm">
-                <li>✓ Create a word chain in 60 seconds</li>
-                <li>✓ Each word must start with the last letter of the previous word</li>
-                <li>✓ All words must be valid English words</li>
-                <li>✓ Score points for each word + letter bonuses</li>
+            <div className="text-left border border-hairline rounded-lg p-6 space-y-3">
+              <h3 className="font-serif text-lg font-semibold text-ink">How to play</h3>
+              <ul className="space-y-2 text-ink-muted text-sm">
+                <li>· Create a word chain in 60 seconds</li>
+                <li>· Each word must start with the last letter of the previous word</li>
+                <li>· All words must be valid English words</li>
+                <li>· Score points for each word + letter bonuses</li>
               </ul>
             </div>
 
             <button
               onClick={startGame}
-              className="w-full bg-primary text-white font-bold text-xl py-4 px-8 rounded-xl hover:bg-indigo-700 transition-colors"
+              className="w-full bg-ink text-paper font-semibold text-xl py-4 px-8 rounded-md hover:opacity-90 transition-opacity"
             >
-              Start Game
+              Play
             </button>
             <button
               onClick={() => setShowStats(true)}
-              className="text-primary font-semibold"
+              className="block mx-auto text-ink-muted font-semibold underline-offset-4 hover:underline"
             >
-              📊 View Stats
+              View stats
             </button>
           </div>
         )}
@@ -169,9 +169,9 @@ export default function WordChainGame({ challenge }: { challenge?: Challenge }) 
 
             {/* Current Score */}
             <div className="text-center">
-              <p className="text-sm text-gray-600">Score</p>
-              <p className="text-4xl font-bold text-primary">{currentScore}</p>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-xs tracking-[0.15em] uppercase text-ink-faint font-semibold">Score</p>
+              <p className="font-serif text-5xl font-semibold text-ink">{currentScore}</p>
+              <p className="text-sm text-ink-muted mt-1">
                 {wordChain.length} {wordChain.length === 1 ? 'word' : 'words'} chained
               </p>
             </div>
@@ -182,9 +182,9 @@ export default function WordChainGame({ challenge }: { challenge?: Challenge }) 
             {/* Input Form */}
             <form onSubmit={handleSubmit} className="space-y-3">
               <div>
-                <label htmlFor="word-input" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="word-input" className="block text-sm font-medium text-ink-muted mb-2">
                   Next word must start with:{' '}
-                  <span className="text-2xl font-bold text-primary">
+                  <span className="font-serif text-2xl font-bold text-ink">
                     {(wordChain.length > 0
                       ? wordChain[wordChain.length - 1]
                       : startWord
@@ -198,7 +198,7 @@ export default function WordChainGame({ challenge }: { challenge?: Challenge }) 
                   value={currentInput}
                   onChange={(e) => setCurrentInput(e.target.value)}
                   disabled={isValidating}
-                  className="w-full px-4 py-4 text-2xl font-semibold border-2 border-gray-300 rounded-lg focus:border-primary focus:outline-none disabled:bg-gray-100 uppercase"
+                  className="w-full px-4 py-4 text-2xl font-semibold border-2 border-hairline rounded-md focus:border-ink focus:outline-none disabled:bg-ink/5 uppercase"
                   placeholder="Type word..."
                   autoComplete="off"
                   autoFocus
@@ -214,7 +214,7 @@ export default function WordChainGame({ challenge }: { challenge?: Challenge }) 
               <button
                 type="submit"
                 disabled={isValidating || !currentInput.trim()}
-                className="w-full bg-primary text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-ink text-paper font-semibold py-3 px-6 rounded-md hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 {isValidating ? 'Checking...' : 'Add Word'}
               </button>
